@@ -1,0 +1,45 @@
+#ifndef GUARD_GAUSS_ELIM_H
+#define GUARD_GAUSS_ELIM_H
+
+#include "matrix_routines.h"
+#include <string>
+
+template<class Vec>
+Cvec gauss_elim(Matd a,Vec b)
+{
+	Matd::size_type n = a.cols();
+	Cvec x(n);
+
+	Matd::size_type k,i,j;
+	double factor;
+	// make all elems in col = k in row >k zero
+	for(k=0;k<n-1;++k) {
+		for(i = k+1;i<n;++i) {
+			factor = a(i,k)/a(k,k);
+			for(j=0;j<n;++j) 
+				a(i,j) -= factor*a(k,j);
+			b[i] -= factor*b[k];
+		}
+	}
+	
+	x[n-1] = b[n-1]/a(n-1,n-1);
+	for(i=n-2;i>=0;--i) {
+		factor = b[i];
+		for(j=i+1;j<n;++j) {
+			factor -= a(i,j)*x[j];
+		}
+		x[i] = factor/a(i,i);
+		if(i ==  0) break;
+	}
+		
+	return x;
+}
+
+
+
+
+
+
+
+
+#endif
