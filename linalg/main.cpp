@@ -27,5 +27,8 @@ int main()
 	cout<< endl;
 	m2.print(cout);
 	cout << endl << m2.cols() << endl << m2.rows() << endl <<endl;
+
+	ofstream out("m.dat");
+	m2.print(out);
 	return 0;
 }

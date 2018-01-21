@@ -23,10 +23,6 @@ public:
 	double operator() (std::vector<double>::size_type i,
 		std::vector<double>::size_type j)
 		const { return M[i][j];}
-	// transpose, implement by bool, and switch in i,j in operator()
-	void T();
-	// determinant
-	double D() const;
 
 	std::ostream& print(std::ostream&);
 protected:
