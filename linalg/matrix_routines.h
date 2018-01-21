@@ -17,12 +17,13 @@ public:
 	size_type rows() const { return r;}
 
 	// implement errors
-	double& operator() (std::vector<double>::size_type i,
-		std::vector<double>::size_type j)
-		{ return M[i][j];}
-	double operator() (std::vector<double>::size_type i,
-		std::vector<double>::size_type j)
-		const { return M[i][j];}
+	double& operator() (size_type i,size_type j)
+			{ return M[i][j];}
+	double operator() (size_type i,size_type j)
+			const { return M[i][j];}
+
+	void switch_rows(size_type i,size_type j);
+	void switch_cols(size_type i,size_type j);
 
 	std::ostream& print(std::ostream&);
 protected:
@@ -31,6 +32,8 @@ protected:
 	size_type r,c;
 
 };
+
+
 
 class Rvec: public Matd {
 public:
@@ -45,6 +48,7 @@ public:
 		{ return M[0][i];}
 	double operator[] (std::vector<double>::size_type i)
 		const { return M[0][i];}
+	void switch_elem(size_type,size_type);
 };
 
 class Cvec: public Matd {
@@ -60,9 +64,17 @@ public:
 		{ return M[i][0];}
 	double operator[] (std::vector<double>::size_type i)
 		const { return M[i][0];}
-
+	void switch_elem(size_type,size_type);
 
 };
+
+void Matd::switch_rows(Matd::size_type i,
+		Matd::size_type j)
+{
+	std::vector<double> temp = M[i];
+	M[i] = M[j];
+	M[j] = temp;
+}
 
 std::ostream& Matd::print(std::ostream& out)
 {
@@ -74,6 +86,22 @@ std::ostream& Matd::print(std::ostream& out)
 		out << '\n';
 	}
 	
+}
+
+void Cvec::switch_elem(Cvec::size_type i,
+		Cvec::size_type j)
+{
+	double temp = M[i][0];
+	M[i][0] = M[j][0];
+	M[j][0] = temp;
+}
+
+void Rvec::switch_elem(Rvec::size_type i,
+		Rvec::size_type j)
+{
+	double temp = M[0][i];
+	M[0][i] = M[0][j];
+	M[0][j] = temp;
 }
 
 
