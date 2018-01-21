@@ -23,7 +23,7 @@ public:
 	double operator() (std::vector<double>::size_type i,
 		std::vector<double>::size_type j)
 		const { return M[i][j];}
-	// transpose
+	// transpose, implement by bool, and switch in i,j in operator()
 	void T();
 	// determinant
 	double D() const;
@@ -81,41 +81,25 @@ std::ostream& Matd::print(std::ostream& out)
 }
 
 
-void Matd::T()
-{
-	// check square
-	size_type n = c;
-	double temp;
-	for(size_type ci = 0;ci<n;++ci) {
-		for(size_type ri = ci+1;ri<n;++ri) {
-			temp = M[ri][ci];
-			M[ri][ci] = M[ci][ri];
-			M[ci][ri] = temp;
-		}
-	}
-}
-
-
 /*
 -----------------------------
 	nonmember functions
 -----------------------------
 */
 
-//transpose
-Matd T(Matd m)
+//transpose, only for saure
+Matd transpose(const Matd& m)
 {
-	// check square
-	Matd m2(m.rows(),m.cols());
-	Matd::size_type n = m.rows();
-	double temp;
-	for(Matd::size_type ci = 0;ci<n;++ci) {
-		m2(ci,ci) = m(ci,ci);
-		for(Matd::size_type ri = ci+1;ri<n;++ri) {
-			m2(ri,ci) = m(ci,ri);
+	Matd::size_type nr = m.rows();
+	Matd::size_type nc = m.cols();
+	Matd m2(nc,nr);
+
+	for(Matd::size_type ci = 0;ci<nc;++ci) {
+		for(Matd::size_type ri = 0;ri<nr;++ri) {
 			m2(ci,ri) = m(ri,ci);
 		}
 	}
+
 	return m2;
 }
 
