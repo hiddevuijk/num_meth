@@ -35,39 +35,6 @@ protected:
 
 
 
-class Rvec: public Matd {
-public:
-	Rvec(int cc):Matd(1,cc) {}
-	Rvec(int cc, double val): Matd(1,cc,val) {}
-	std::vector<double>::size_type size() const {return c;}
-	double& operator() (std::vector<double>::size_type i)
-		{ return M[0][i];}
-	double operator() (std::vector<double>::size_type i)
-		const { return M[0][i];}
-	double& operator[] (std::vector<double>::size_type i)
-		{ return M[0][i];}
-	double operator[] (std::vector<double>::size_type i)
-		const { return M[0][i];}
-	void switch_elem(size_type,size_type);
-};
-
-class Cvec: public Matd {
-public:
-	Cvec(int rr):Matd(rr,1) {}
-	Cvec(int rr, double val): Matd(rr,1,val) {}
-	std::vector<double>::size_type size() const {return r;}
-	double& operator() (std::vector<double>::size_type i)
-		{ return M[i][0];}
-	double operator() (std::vector<double>::size_type i)
-		const { return M[i][0];}
-	double& operator[] (std::vector<double>::size_type i)
-		{ return M[i][0];}
-	double operator[] (std::vector<double>::size_type i)
-		const { return M[i][0];}
-	void switch_elem(size_type,size_type);
-
-};
-
 void Matd::switch_rows(Matd::size_type i,
 		Matd::size_type j)
 {
@@ -86,22 +53,6 @@ std::ostream& Matd::print(std::ostream& out)
 		out << '\n';
 	}
 	
-}
-
-void Cvec::switch_elem(Cvec::size_type i,
-		Cvec::size_type j)
-{
-	double temp = M[i][0];
-	M[i][0] = M[j][0];
-	M[j][0] = temp;
-}
-
-void Rvec::switch_elem(Rvec::size_type i,
-		Rvec::size_type j)
-{
-	double temp = M[0][i];
-	M[0][i] = M[0][j];
-	M[0][j] = temp;
 }
 
 
@@ -127,9 +78,8 @@ Matd transpose(const Matd& m)
 	return m2;
 }
 
-
-
-Matd multiply(Matd a, Matd b) 
+// implement vM, Mv
+Matd multiply(const Matd& a,const Matd& b) 
 {
 
 	Matd c(a.rows(),b.cols());
