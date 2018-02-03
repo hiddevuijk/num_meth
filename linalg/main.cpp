@@ -25,22 +25,18 @@ int main()
 	A(2,2) = 10;
 
 
-	Cvec b(3);
+	std::vector<double> b(3);
 	b[0] = 7.85;
 	b[1] = -19.3;
 	b[2] = 71.4;
 	cout<<setprecision(5);
-	A.print(cout);	
-	cout<<endl;
 	LUdecomp lu(A);
-	cout<<endl;
-
-	Cvec x = lu.solve(b);
-	x.print(cout);
-
-	Matd bb = multiply(A,x);
-	cout<<endl;
-	bb.print(cout);
-
+	std::vector<double> x = lu.solve(b);
+	print_vec(b,cout);
+	vector<double> bb = multiply(A,x);
+	print_vec(bb,cout);
+	x = gauss_elim(A,b);
+	bb = multiply(A,x);
+	print_vec(bb,cout);
 	return 0;
 }

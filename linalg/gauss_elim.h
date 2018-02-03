@@ -33,7 +33,7 @@ template<class Vec>
 Vec gauss_elim(Matd a,Vec b)
 {
 	Matd::size_type n = a.cols();
-	Cvec x(n);
+	std::vector<double> x(n);
 
 	Matd::size_type k,i,j;
 	double factor;
