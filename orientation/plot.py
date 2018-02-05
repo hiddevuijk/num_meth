@@ -3,9 +3,13 @@ import matplotlib.pyplot as plt
 
 
 y = np.loadtxt("y.dat")
-p = np.loadtxt("p.dat")
+px = np.loadtxt("px.dat")
+py = np.loadtxt("py.dat")
 
-plt.plot(y,p)
+plt.plot(y,px,label="px")
+plt.plot(y,py,label="py")
+
+plt.legend()
 plt.show()
 
 
